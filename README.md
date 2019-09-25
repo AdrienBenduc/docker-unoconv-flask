@@ -2,13 +2,6 @@
 
 Dockerimage to run unoconv as a webservice using [Flask](https://github.com/pallets/flask) and [Flask-RESTful](https://github.com/flask-restful/flask-restful).
 
-If you prefer a pre-build version it is available from [hub.docker.com](https://hub.docker.com/r/jordanorc/docker-unoconv-flask)
-just do a regular pull
-
-```bash
-$ docker pull jordanorc/docker-unoconv-flask
-```
-
 ## Build
 
 ```bash
