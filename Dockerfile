@@ -57,13 +57,24 @@ RUN addgroup unoconv && adduser \
     -u 1003 \
     coog
 
-RUN mkdir -p /home/coog/.config/
-RUN chmod -R 777 /home/coog/.config/
+RUN adduser \
+    -D \
+    -g "" \
+    -G unoconv \
+    -H \
+    -u 1000 \
+    unoconv
 
-RUN touch /var/log/unoconv.log
+RUN mkdir -p /home/coog/.config/
+RUN mkdir -p /home/unoconv/.config/
+RUN chmod -R 777 /home/coog/.config/
+RUN chmod -R 777 /home/unoconv/.config/
+
 RUN touch /var/log/unoconv.log
 
 RUN chown coog:unoconv /var/log/unoconv.log
+RUN chmod 777 /var/log/unoconv.log
 RUN chown -R coog:unoconv /home/coog/
+RUN chown -R unoconv:unoconv /home/unoconv/
 
 ENTRYPOINT circusd circus.ini
