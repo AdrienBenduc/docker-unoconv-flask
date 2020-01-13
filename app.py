@@ -1,6 +1,8 @@
 import os
 import subprocess
 import tempfile
+import time
+import uuid
 
 from flask import Flask
 from flask import request
@@ -15,8 +17,9 @@ api = Api(app)
 class UnoconvConverter(object):
 
     def convert(self, file, input_format, output_format, unoconv_args):
-        temp_path = tempfile.NamedTemporaryFile(suffix=".%s" % (
-            input_format, ))
+        rand_part = str(uuid.uuid4())
+        temp_path = tempfile.NamedTemporaryFile(prefix=rand_part,
+            suffix=".%s" % (input_format, ))
         temp_path.write(file)
         temp_path.flush()
         data = None
@@ -39,6 +42,14 @@ class UnoconvConverter(object):
             converted_file = os.path.join('/tmp/',
                 os.path.basename(temp_path.name).split('.')[0] +
                 '.' + output_format)
+
+            nb_retry = 0
+            while nb_retry < 10:
+                nb_retry += 1
+                if os.path.exists(converted_file):
+                    break
+                time.sleep(0.2)
+
             with open(converted_file, 'rb') as _f:
                 data = _f.read()
 

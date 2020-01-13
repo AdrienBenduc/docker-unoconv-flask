@@ -32,6 +32,7 @@ RUN apk add --no-cache \
     && ln -s /usr/bin/python3 /usr/bin/python \
     && pip install pip --upgrade \
     && pip install -r /tmp/requirements.txt \
+    && apk add --update openjdk8-jre \
     && apk del curl \
     && rm -rf /var/cache/apk/* \
     && rm -rf /root/.cache/ \
